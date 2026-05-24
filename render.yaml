@@ -1,0 +1,20 @@
+# =============================================================
+# render.yaml -- Render Deployment Configuration
+# Docs: https://render.com/docs/render-yaml-spec
+# =============================================================
+
+services:
+  - type: web
+    name: financeassist-ai
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn financeassist_app:app --host 0.0.0.0 --port $PORT
+    plan: free
+
+    # Environment variables -- set values in Render dashboard
+    # Never put real keys here, just the variable names
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false        # means: set manually in Render dashboard
+
+    healthCheckPath: /health
